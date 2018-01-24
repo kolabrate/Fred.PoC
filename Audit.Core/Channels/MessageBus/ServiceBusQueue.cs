@@ -3,16 +3,13 @@ using System.Configuration;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 
-
-namespace Audit.Core.Channels.Storage
+namespace Audit.Core.Channels.MessageBus
 {
-    public class ServiceBus : IChannel
+    public class ServiceBusQueue : IChannel
     {
         private string _serviceBusConnectionString = ConfigurationManager.AppSettings["ServiceBus"];
-        private TopicClient Topic { get; set; }
-
-        //check if queue exists or create a queue
-        public ServiceBus(string serviceBusConnectionString)
+        private QueueClient Queue { get; set; }
+        public ServiceBusQueue(string serviceBusConnectionString)
         {
 
 

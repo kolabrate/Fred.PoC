@@ -156,9 +156,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Channels\Channel.cs" />
     <Compile Include="Channels\IChannel.cs" />
-    <Compile Include="Channels\Storage\DataStore.cs" />
-    <Compile Include="Channels\Storage\EventHub.cs" />
-    <Compile Include="Channels\Storage\ServiceBus.cs" />
+    <Compile Include="Channels\MessageBus\ServiceBusTopic.cs" />
+    <Compile Include="Channels\Storage\NoSql.cs" />
+    <Compile Include="Channels\MessageBus\EventHub.cs" />
+    <Compile Include="Channels\MessageBus\ServiceBusQueue.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Filter\Auth.cs" />
     <Compile Include="Global.asax.cs">

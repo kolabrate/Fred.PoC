@@ -17,7 +17,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Audit.Core.Channels;
-using Audit.Core.Channels.Storage;
 using Newtonsoft.Json.Linq;
 
 
@@ -30,7 +29,7 @@ namespace Audit.Core.Controllers
         private readonly Channel _channel;
         public DefaultController()
         {
-            _channel = new Channel(new ServiceBus()); // DI
+           // _channel = new Channel(new ServiceBus()); // DI
         }
 
         [Route("insert")]
