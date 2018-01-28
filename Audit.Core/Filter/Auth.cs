@@ -15,6 +15,8 @@ using Microsoft.OData.UriParser;
 
 namespace Audit.Core.Filter
 {
+
+    //Validate Token against Fred Identity.
     public class Auth : AuthorizationFilterAttribute
     {
       
@@ -23,7 +25,7 @@ namespace Audit.Core.Filter
         {
             try
             {
-                if (actionContext.Request.Headers.Authorization.ToString().Substring(7) != ConfigurationManager.AppSettings["AccessToken"])
+                if (actionContext.Request.Headers.Authorization.ToString().Substring(7) != ConfigurationManager.AppSettings["AccessToken"]) // validate the token against fred identity - as part of implementation.
                     actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
                
             }

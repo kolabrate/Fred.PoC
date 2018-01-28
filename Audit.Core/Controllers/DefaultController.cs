@@ -17,6 +17,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Audit.Core.Channels;
+using Audit.Core.Channels.MessageBus;
 using Newtonsoft.Json.Linq;
 
 
@@ -29,7 +30,7 @@ namespace Audit.Core.Controllers
         private readonly Channel _channel;
         public DefaultController()
         {
-           // _channel = new Channel(new ServiceBus()); // DI
+            _channel = new Channel(new EventHub(ConfigurationManager.AppSettings["EventHub"])); // DI - once finalised the messaging framework , this can be removed.
         }
 
         [Route("insert")]
@@ -38,26 +39,14 @@ namespace Audit.Core.Controllers
         {
             try
             {
-                
                 await _channel.WriteAsync(PopulateAuditData(data.ToString()));           
                 return Ok();
-
             }
             catch (Exception e)
             {
                 return InternalServerError(new Exception(e.Message));
             }
         }
-
-
-        [Route("Query")]
-        [HttpGet]
-        public IHttpActionResult GetAuditData()
-        {
-
-            throw new NotImplementedException();
-        }
-
 
         #region private methods
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Audit.Core.Channels
@@ -12,10 +13,14 @@ namespace Audit.Core.Channels
             this._channel = channel;
         }
 
-        public Task<bool> WriteAsync(Models.Audit data)
+        public Task WriteAsync<T>(T data)
         {
             return _channel.WriteAsync(data);
         }
 
+        public Task WriteAsync<T>(IEnumerable<T> data)
+        {
+            return _channel.WriteAsync(data);
+        }
     }
 }
