@@ -10,12 +10,10 @@
       "type": {
         "coding": [
           {
-            "system": "http://hl7.org/fhir/v2/0203",
             "code": "MR"
           }
         ]
       },
-      "system": "urn:oid:1.2.36.146.595.217.0.1",
       "value": "12345",
       "period": {
         "start": "2001-05-06"
@@ -79,11 +77,10 @@
     }
   ],
   "gender": "male",
-  "birthDate": "1974-12-25",
+  "birthDate": "1982-12-19",
   "_birthDate": {
     "extension": [
       {
-        "url": "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
         "valueDateTime": "1974-12-25T14:35:45-05:00"
       }
     ]
@@ -112,7 +109,6 @@
         {
           "coding": [
             {
-              "system": "http://hl7.org/fhir/v2/0131",
               "code": "N"
             }
           ]
@@ -123,7 +119,6 @@
         "_family": {
           "extension": [
             {
-              "url": "http://hl7.org/fhir/StructureDefinition/humanname-own-prefix",
               "valueString": "VV"
             }
           ]
