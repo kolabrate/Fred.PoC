@@ -71,7 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Files\Patient.json" />
+    <None Include="Files\Patient2.json" />
+    <None Include="Files\Patient3.json" />
+    <None Include="Files\Patient1.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -36,24 +36,44 @@ namespace Audit.Core.Console.Test
 
         }
 
+        
         private static async Task RunAsync()
         {
-            await InsertAuditAsync();
+            //record three patient records
+            for (int i = 0; i < 2; i++)
+            {
+                await LogPatientAsync(i);
+            }
+
+          
+
         }
 
-        static async Task InsertAuditAsync()
+        static async Task LogPatientAsync(int patientId)
         {
             
             HttpResponseMessage response = await _client.PostAsJsonAsync(
-                "api/audit/insert", new Request() {Data= ReturnJson() });
+                "api/audit/insert", new Request() {Data= ReturnJson(patientId) });
             response.EnsureSuccessStatusCode();
         }
 
 
-        private static string ReturnJson()
+        private static string ReturnJson(int patientId)
         {
+            switch (patientId)
+            {
+                case 1:
+                    return (File.ReadAllText(@"..\..\Files\Patient1.json"));
+                case 2:
+                    return (File.ReadAllText(@"..\..\Files\Patient2.json"));
+                case 3:
+                    return (File.ReadAllText(@"..\..\Files\Patient3.json"));
+                default:
+                        return (File.ReadAllText(@"..\..\Files\Patient1.json"));
+            }
+
             //modify the code here to plain json string.
-            return (File.ReadAllText(@"..\..\Files\Patient.json"));
+            
         }
 
         private static HttpClient GethttpClient()
