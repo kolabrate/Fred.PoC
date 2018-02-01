@@ -24,22 +24,24 @@ using Newtonsoft.Json.Linq;
 namespace Audit.Core.Controllers
 {
     [Auth]
-    [RoutePrefix("api/audit")]
-    public class DefaultController : ApiController
+    [RoutePrefix("api/patients")]
+    public class PatientController : ApiController
     {
         private readonly Channel _channel;
-        public DefaultController()
+        public PatientController()
         {
             _channel = new Channel(new EventHub(ConfigurationManager.AppSettings["EventHub"])); // DI - once finalised the messaging framework , this can be removed.
         }
 
-        [Route("insert")]
+        [Route("log")]
         [HttpPost]
         public async Task<IHttpActionResult> Post([FromBody]JObject data)
         {
             try
             {
-                await _channel.WriteAsync(PopulateAuditData(data.ToString()));           
+                
+                //PopulatePatientEvent(data.ToString());
+               await _channel.WriteAsync(PopulatePatientEvent(data.ToString()));           
                 return Ok();
             }
             catch (Exception e)
@@ -50,12 +52,16 @@ namespace Audit.Core.Controllers
 
         #region private methods
 
-        private  Models.Audit PopulateAuditData(string data)
+        private  Patient PopulatePatientEvent(string data)
         {
             var jwtEncodedString = HttpContext.Current.Request.Headers["Authorization"].Substring(7);
             var token = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
-            return new Models.Audit()
+            return new Patient
             {
+                rowkey = Guid.NewGuid().ToString(),
+               patientid = RetrievePatientId(data),
+                patientName = "Anand Maran",
+               //patientid = "a02ea8bf-7704-4f2b-893e-9d0b37fa936d",
                 AadId = token.Claims.First(c => c.Type == "oid").Value,
                 UserDisplayName = token.Claims.First(c => c.Type == "displayname").Value,
                 UserPrincipalName = token.Claims.First(c => c.Type == "principalname").Value,
@@ -69,7 +75,10 @@ namespace Audit.Core.Controllers
 
         }
 
-
+        private string RetrievePatientId(string data)
+        {
+            return Guid.NewGuid().ToString();
+        }
 
         #endregion
 

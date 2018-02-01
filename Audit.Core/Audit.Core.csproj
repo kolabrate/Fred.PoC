@@ -163,12 +163,15 @@
     <Compile Include="Channels\IChannel.cs" />
     <Compile Include="Channels\MessageBus\ServiceBusTopic.cs" />
     <Compile Include="Channels\MessageBus\EventHub.cs" />
-    <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Filter\Auth.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Audit.cs" />
+    <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
