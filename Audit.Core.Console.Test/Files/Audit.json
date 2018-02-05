@@ -1,7 +1,7 @@
 ﻿{
-  "StoreId": 1234,
+  "StoreId": 1234666,
   "userAAID": "AA0110997857",
-  "UserLogin": "anand.maran@fred.com.au",
+  "UserLogin": "anand@fred.com.au",
   "SessionID": 1100001110011,
   "SequenceId": 1,
   "CompanyId": "Sig_0011_00111",
@@ -11,9 +11,8 @@
   "Data": {
     "Action": "Create",
     "OldValue": "",
-    "NewValue": "25$",
+    "NewValue": "75$",
     "Link": "http://fi-dev.com.au/?id=A0011456",
-    "timestamp": "22/12/2017 10.00.PM ( UTC)",
-    "": ""
+    "timestamp": "22/12/2017 10.00.PM"
   }
 }

@@ -40,49 +40,42 @@ namespace Audit.Core.Console.Test
         
         private static async Task RunAsync()
         {
-            //record three patient records
-            for (int i = 0; i < 5; i++)
-            {
-                await LogPatientAsync(i);
+            
+            for (int i = 0; i < 10; i++)
+            { 
+                await LogAuditAsync();
             }
 
           
 
         }
 
+        #region - Audit related private functions
 
-        static async Task LogPatientAsync(int patientId)
+        static async Task LogAuditAsync()
         {
-            
+
             HttpResponseMessage response = await _client.PostAsJsonAsync(
-                "api/patients/log", new Request() {Data= ReturnJson(patientId) });
+                "api/audit/log", new Request() { Data = ReturnAuditJson() });
             response.EnsureSuccessStatusCode();
         }
 
-
-        private static string ReturnJson(int patientId)
+        private static string ReturnAuditJson()
         {
-            switch (patientId)
-            {
-                case 1:
-                    return (File.ReadAllText(@"..\..\Files\Patient1.json"));
-                case 2:
-                    return (File.ReadAllText(@"..\..\Files\Patient2.json"));
-                case 3:
-                    return (File.ReadAllText(@"..\..\Files\Patient3.json"));
-                default:
-                        return (File.ReadAllText(@"..\..\Files\Patient1.json"));
-            }
 
-            //modify the code here to plain json string.
-            
+            return (File.ReadAllText(@"..\..\Files\Audit.json"));
         }
+
+        #endregion
+
+
+
 
         private static HttpClient GethttpClient()
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri(ConfigurationManager.AppSettings["AuditApi"].ToString());
-            _client.DefaultRequestHeaders.Add("Authorization","Bearer " + ConfigurationManager.AppSettings["FredToken"].ToString());
+            _client.DefaultRequestHeaders.Add("Authorization","Bearer " + ConfigurationManager.AppSettings["FredAccessToken"].ToString());
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
