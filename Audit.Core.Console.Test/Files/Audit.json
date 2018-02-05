@@ -1,0 +1,19 @@
+﻿{
+  "StoreId": 1234,
+  "userAAID": "AA0110997857",
+  "UserLogin": "anand.maran@fred.com.au",
+  "SessionID": 1100001110011,
+  "SequenceId": 1,
+  "CompanyId": "Sig_0011_00111",
+  "CompanyName": "Sigma",
+  "Environment": "Production",
+  "Source": "Fred Identity",
+  "Data": {
+    "Action": "Create",
+    "OldValue": "",
+    "NewValue": "25$",
+    "Link": "http://fi-dev.com.au/?id=A0011456",
+    "timestamp": "22/12/2017 10.00.PM ( UTC)",
+    "": ""
+  }
+}
