@@ -24,11 +24,11 @@ using Newtonsoft.Json.Linq;
 namespace Audit.Core.Controllers
 {
     [Auth]
-    [RoutePrefix("api/patients")]
-    public class PatientController : ApiController
+    [RoutePrefix("api/audit")]
+    public class AuditController : ApiController
     {
         private readonly Channel _channel;
-        public PatientController()
+        public AuditController()
         {
             _channel = new Channel(new EventHub(ConfigurationManager.AppSettings["EventHub"])); // DI - once finalised the messaging framework , this can be removed.
         }
@@ -39,10 +39,8 @@ namespace Audit.Core.Controllers
         {
             try
             {
-                
-                //PopulatePatientEvent(data.ToString());
-               await _channel.WriteAsync(PopulatePatientEvent(data.ToString()));           
-                return Ok();
+               await _channel.WriteAsync(PopulateAuditEvent(data.ToString()));           
+               return Ok();
             }
             catch (Exception e)
             {
@@ -52,21 +50,27 @@ namespace Audit.Core.Controllers
 
         #region private methods
 
-        private  Patient PopulatePatientEvent(string data)
+        private  Models.Audit PopulateAuditEvent(string data)
         {
             var jwtEncodedString = HttpContext.Current.Request.Headers["Authorization"].Substring(7);
             var token = new JwtSecurityToken(jwtEncodedString: jwtEncodedString);
-            return new Patient
+            return new Models.Audit
             {
-                rowkey = Guid.NewGuid().ToString(),
-               patientid = RetrievePatientId(data),
-                patientName = "Anand Maran",
-               //patientid = "a02ea8bf-7704-4f2b-893e-9d0b37fa936d",
-                AadId = token.Claims.First(c => c.Type == "oid").Value,
+                id = Guid.NewGuid().ToString(),
+                storeid = token.Claims.First(c => c.Type == "masterSiteId").Value,
+                userAAID = token.Claims.First(c => c.Type == "oid").Value,
                 UserDisplayName = token.Claims.First(c => c.Type == "displayname").Value,
-                UserPrincipalName = token.Claims.First(c => c.Type == "principalname").Value,
-                UserEmailName = token.Claims.First(c => c.Type == "useremail").Value,
-                SiteId = token.Claims.First(c => c.Type == "masterSiteId").Value,
+                UserLogin = token.Claims.First(c => c.Type == "useremail").Value,
+
+                #region - hardcoded - refactor required
+                Source = "Fred Identity", //this needs to be validated
+                CompanyId = "SIGM_001001",//to be modified
+                CompanyName = "SIGMA", //to be modified
+                Environment = "Dev",//to be modified
+                SessionId = "Sess_00110011",//to be modified
+                SequenceId = "1",//to be modified
+                #endregion
+
                 Data = data,
                 ModifiedDateTime = DateTime.UtcNow,
                 CreatedDateTime = DateTime.UtcNow
@@ -74,12 +78,6 @@ namespace Audit.Core.Controllers
             };
 
         }
-
-        private string RetrievePatientId(string data)
-        {
-            return Guid.NewGuid().ToString();
-        }
-
         #endregion
 
     }

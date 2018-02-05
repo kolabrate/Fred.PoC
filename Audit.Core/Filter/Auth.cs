@@ -25,7 +25,7 @@ namespace Audit.Core.Filter
         {
             try
             {
-                if (actionContext.Request.Headers.Authorization.ToString().Substring(7) != ConfigurationManager.AppSettings["AccessToken"]) // validate the token against fred identity - as part of implementation.
+                if (actionContext.Request.Headers.Authorization.ToString().Substring(7) != ConfigurationManager.AppSettings["FredAccessToken"]) // validate the token against fred identity - as part of implementation.
                     actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
                
             }
