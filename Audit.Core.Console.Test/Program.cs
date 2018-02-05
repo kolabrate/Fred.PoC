@@ -12,6 +12,7 @@ using Audit.Core.Console.Test.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+//partition Key - /storeid
 
 namespace Audit.Core.Console.Test
 {
@@ -40,7 +41,7 @@ namespace Audit.Core.Console.Test
         private static async Task RunAsync()
         {
             //record three patient records
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 5; i++)
             {
                 await LogPatientAsync(i);
             }
@@ -49,11 +50,12 @@ namespace Audit.Core.Console.Test
 
         }
 
+
         static async Task LogPatientAsync(int patientId)
         {
             
             HttpResponseMessage response = await _client.PostAsJsonAsync(
-                "api/audit/insert", new Request() {Data= ReturnJson(patientId) });
+                "api/patients/log", new Request() {Data= ReturnJson(patientId) });
             response.EnsureSuccessStatusCode();
         }
 
